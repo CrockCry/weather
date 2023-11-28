@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempWeather</title>
+
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="Digite o nome da cidade" spellcheck="false">
+            <button><img src="img/search.png" alt="sarch button"></button>
+        </div>
+        <div class="weather">
+            <img src="img/rain.png" class="weatherIcon" alt="status wheather">
+            <h1 class="temp">22°C</h1>
+            <h2 class="city">New York</h2>
+            <div class="details">
+                <div class="col">
+                    <img src="img/humidity.png" alt="status humidity">
+                    <div>
+                        <p class="humidity">50%</p>
+                        <p>humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="img/wind.png" alt="status wind">
+                    <div>
+                        <p class="wind">15 Km/h</p>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            const apiKey = "543361377c2ee96abe86b621f17eeb3e";
+            const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=Fortaleza";
+
+            async function checkWeather() {
+                const response = await fetch(apiUrl + '&appid={apiKey}');
+                var data = await response.json();
+
+                console.log(data);
+            }
+
+            checkWeather();
+        </script>
+</body>
+
+</html>
