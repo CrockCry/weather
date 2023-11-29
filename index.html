@@ -25,14 +25,14 @@
                     <img src="img/humidity.png" alt="status humidity">
                     <div>
                         <p class="humidity">50%</p>
-                        <p>humidity</p>
+                        <p>Humidade</p>
                     </div>
                 </div>
                 <div class="col">
                     <img src="img/wind.png" alt="status wind">
                     <div>
                         <p class="wind">15 Km/h</p>
-                        <p>Wind Speed</p>
+                        <p>Vento</p>
                     </div>
                 </div>
 
@@ -41,16 +41,40 @@
 
         <script>
             const apiKey = "543361377c2ee96abe86b621f17eeb3e";
-            const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=Fortaleza";
+            const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
-            async function checkWeather() {
-                const response = await fetch(apiUrl + '&appid={apiKey}');
+            const searchBox = document.querySelector(".search input");
+            const searchBtn = document.querySelector(".search button");
+
+            const weatherIcon = document.querySelector(".weatherIcon")
+
+            async function checkWeather(city) {
+                const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
                 var data = await response.json();
 
-                console.log(data);
+                document.querySelector(".city").innerHTML = data.name;
+                document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°c";
+                document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+                document.querySelector(".wind").innerHTML = Math.round(data.wind.speed * 3.6).toFixed(1) + "km/h";
+
+                if (data.weather[0].main == "Clouds") {
+                    weatherIcon.src = "img/clouds.png"
+                } else if (data.weather[0].main == "Clear") {
+                    weatherIcon.src = "img/clear.png"
+                } else if (data.weather[0].main == "Rain") {
+                    weatherIcon.src = "img/rain.png"
+                } else if (data.weather[0].main == "Drizzle") {
+                    weatherIcon.src = "img/drizzle.png"
+                }else if (data.weather[0].main == "Mist") {
+                    weatherIcon.src = "img/cloud.png"
+                }
+
+                document.querySelector(".weather").style.display = "block"
             }
 
-            checkWeather();
+            searchBtn.addEventListener("click", () => {
+                checkWeather(searchBox.value);
+            })
         </script>
 </body>
 
